@@ -1,0 +1,30 @@
+{
+  "uuid": "0ee0b35f-431d-4236-a971-0530a847eb82",
+  "shortName": "Foxmosa",
+  "longName": "FoxmosaWatchFace",
+  "companyName": "JohnnyWorks",
+  "versionLabel": "1.0",
+  "sdkVersion": "3",
+  "targetPlatforms": ["aplite", "basalt"],
+  "watchapp": {
+    "watchface": true
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": [
+      {
+        "type": "png",
+        "name": "BG",
+        "file": "images/bg.png"
+      },
+      {
+        "menuIcon": true,
+        "type": "png",
+        "name": "IMAGE_MENU_ICON",
+        "file": "images/menu_icon.png"
+      }
+    ]
+  }
+}
