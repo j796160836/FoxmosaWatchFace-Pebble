@@ -1,9 +1,18 @@
 #include <pebble.h>
 
 static Window *window;
+static TextLayer *s_battery_layer;
 static TextLayer *s_time_layer;
+
 static GBitmap *s_bitmap;
 static BitmapLayer *s_bitmap_layer;
+
+static void handle_battery(BatteryChargeState charge_state) {
+  static char battery_text[] = "100%";
+
+  snprintf(battery_text, sizeof(battery_text), "%d%%", charge_state.charge_percent);
+  text_layer_set_text(s_battery_layer, battery_text);
+}
 
 static void update_time() {
   // Get a tm structure
@@ -24,6 +33,7 @@ static void update_time() {
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
+  handle_battery(battery_state_service_peek());
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
@@ -45,27 +55,34 @@ static void window_load(Window *window) {
 #endif
   layer_add_child(window_layer, bitmap_layer_get_layer(s_bitmap_layer));
 
-
   // Create time TextLayer
   s_time_layer = text_layer_create(GRect(-5, 75, 144, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
-#ifdef PBL_PLATFORM_APLITE
-  text_layer_set_text_color(s_time_layer, GColorBlack);
-#elif PBL_PLATFORM_BASALT
-  text_layer_set_text_color(s_time_layer, GColorWhite);
-#endif
+  text_layer_set_text_color(s_time_layer, COLOR_FALLBACK(GColorWhite, GColorBlack));
   text_layer_set_text(s_time_layer, "00:00");
-
-  // Improve the layout to be more like a watchface
   text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
-
-  // Add it as a child layer to the Window's root layer
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
+
+  // Create battery TextLayer
+  s_battery_layer = text_layer_create(GRect(114, 136, 30, 34));
+  text_layer_set_text_color(s_battery_layer, COLOR_FALLBACK(GColorWhite, GColorBlack));
+  text_layer_set_background_color(s_battery_layer, GColorClear);
+  text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_text_alignment(s_battery_layer, GTextAlignmentCenter);
+  text_layer_set_text(s_battery_layer, "100%");
+  layer_add_child(window_layer, text_layer_get_layer(s_battery_layer));
+
   update_time();
+
+  // Register with TickTimerService
+  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  battery_state_service_subscribe(handle_battery);
 }
 
 static void window_unload(Window *window) {
+  tick_timer_service_unsubscribe();
+  battery_state_service_unsubscribe();
   text_layer_destroy(s_time_layer);
   bitmap_layer_destroy(s_bitmap_layer);
   gbitmap_destroy(s_bitmap);
@@ -74,16 +91,6 @@ static void window_unload(Window *window) {
 static void init(void) {
   window = window_create();
 
-// #ifdef PBL_COLOR
-//   window_set_background_color(s_main_window, GColorDukeBlue);
-// #else
-//   window_set_background_color(s_main_window, GColorBlack);
-// #endif
-// #ifdef PBL_PLATFORM_APLITE
-//   window_set_background_color(s_main_window, GColorWhite);
-// #elif PBL_PLATFORM_BASALT
-//   window_set_background_color(s_main_window, GColorBlack);
-// #endif
   window_set_background_color(window, COLOR_FALLBACK(GColorBlack, GColorWhite));
 
   window_set_window_handlers(window, (WindowHandlers) {
@@ -92,8 +99,6 @@ static void init(void) {
   });
   const bool animated = true;
   window_stack_push(window, animated);
-  // Register with TickTimerService
-  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 }
 
 static void deinit(void) {
