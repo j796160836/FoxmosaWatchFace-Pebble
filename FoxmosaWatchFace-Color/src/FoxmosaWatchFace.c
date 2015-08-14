@@ -65,7 +65,7 @@ static void window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
 
   // Create battery TextLayer
-  s_battery_layer = text_layer_create(GRect(114, 136, 30, 34));
+  s_battery_layer = text_layer_create(GRect(114, 140, 30, 34));
   text_layer_set_text_color(s_battery_layer, COLOR_FALLBACK(GColorWhite, GColorBlack));
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
