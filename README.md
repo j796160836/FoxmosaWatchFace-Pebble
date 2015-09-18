@@ -1,11 +1,16 @@
 # FoxmosaWatchFace-Pebble
 
+<img src="https://raw.githubusercontent.com/j796160836/FoxmosaWatchFace-Pebble/master/FoxmosaWatchFace-Color/screenshot/banner.png" width="600">  
+
 Foxmosa is mascot of Mozilla Taiwan Community.  
 Mozilla produces many products such as the Firefox, Thunderbird, Firefox OS.  
 Picture designed by ECBp + Tatit + Indigo + Irvin (cc:by-nc-sa)  
 MozTW, Mozilla Taiwan  
 
+<img src="https://raw.githubusercontent.com/j796160836/FoxmosaWatchFace-Pebble/master/FoxmosaWatchFace-Color/screenshot/photo.jpg" width="400">  
+
 ## Download
+<img src="https://raw.githubusercontent.com/j796160836/FoxmosaWatchFace-Pebble/master/FoxmosaWatchFace-Color/screenshot/screenshot-monochrome.png">  
 Apps is available on Pebble  
   
 <a href="https://apps.getpebble.com/en_US/application/55bed9ed39209aec5f000083"><img src="http://pblweb.com/badge/55bed9ed39209aec5f000083/colour/size" alt="Pebble download"><br />
