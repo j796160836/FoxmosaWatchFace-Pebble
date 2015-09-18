@@ -7,8 +7,10 @@ MozTW, Mozilla Taiwan
 
 ## Download
 Apps is available on Pebble  
-![Pebble download](http://pblweb.com/badge/55bed9ed39209aec5f000083/colour/size)  
-[Download](https://apps.getpebble.com/en_US/application/55bed9ed39209aec5f000083)
+  
+<a href="https://apps.getpebble.com/en_US/application/55bed9ed39209aec5f000083"><img src="http://pblweb.com/badge/55bed9ed39209aec5f000083/colour/size" alt="Pebble download"><br />
+Download
+</a>
 
 ## Build the code  
 
